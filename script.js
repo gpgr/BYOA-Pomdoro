@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId = null;
     let isRunning = false;
     let isPaused = false;
+    let currentFocus = '';
 
     function updateDisplay() {
         const minutes = Math.floor(timeLeft / 60);
@@ -23,8 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update browser tab title
         const activeMode = document.querySelector('.mode.active');
-        const modeText = activeMode.textContent;
-        document.title = `${timeString} - ${modeText} Timer`;
+        if (currentFocus && activeMode.textContent === 'Pomodoro') {
+            document.title = `${timeString} | ${currentFocus}`;
+        } else {
+            document.title = `${timeString} | ${activeMode.textContent} Timer`;
+        }
     }
 
     function showFocusModal() {
@@ -34,12 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function hideFocusModal() {
         focusModal.style.display = 'none';
+        focusInput.value = ''; // Clear input field
+    }
+
+    function handleFocusInput(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            confirmFocusButton.click();
+        } else if (event.key === 'Escape') {
+            event.preventDefault();
+            skipFocusButton.click();
+        }
     }
 
     function startTimer() {
         if (!isRunning) {
             const activeMode = document.querySelector('.mode.active');
-            if (activeMode.textContent === 'Pomodoro') {
+            if (activeMode.textContent === 'Pomodoro' && !isPaused && !currentFocus) {
                 showFocusModal();
             } else {
                 actuallyStartTimer();
@@ -81,19 +96,22 @@ document.addEventListener('DOMContentLoaded', () => {
         pauseTimer();
         const activeMode = document.querySelector('.mode.active');
         timeLeft = parseInt(activeMode.dataset.time) * 60;
-        updateDisplay();
+        focusText.textContent = '';
+        currentFocus = '';
+        updateDisplay(); // Update display after resetting focus
         startButton.disabled = false;
         startButton.textContent = 'Start';
         isPaused = false;
-        focusText.textContent = ''; // Clear focus text on reset
     }
 
     confirmFocusButton.addEventListener('click', () => {
         const focus = focusInput.value.trim();
         if (focus) {
             focusText.textContent = `Fokus: ${focus}`;
+            currentFocus = focus;
         } else {
             focusText.textContent = '';
+            currentFocus = '';
         }
         hideFocusModal();
         actuallyStartTimer();
@@ -101,9 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     skipFocusButton.addEventListener('click', () => {
         focusText.textContent = '';
+        currentFocus = '';
         hideFocusModal();
         actuallyStartTimer();
     });
+
+    focusInput.addEventListener('keydown', handleFocusInput);
 
     startButton.addEventListener('click', startTimer);
     pauseButton.addEventListener('click', pauseTimer);

@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Hepta Slab', serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -26,7 +26,7 @@ body {
 h1 {
     color: #333;
     margin-bottom: 1.5rem;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .focus-text {
@@ -35,6 +35,7 @@ h1 {
     margin-bottom: 1.5rem;
     min-height: 2rem;
     font-style: italic;
+    font-weight: 500;
 }
 
 .timer {
@@ -62,9 +63,13 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-weight: 400;
+    font-weight: 500;
     flex: 1;
     min-width: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button:disabled {
@@ -135,11 +140,13 @@ button:hover:not(:disabled) {
 .modal h2 {
     margin-bottom: 1rem;
     color: #333;
+    font-weight: 600;
 }
 
 .modal p {
     margin-bottom: 1.5rem;
     color: #666;
+    font-weight: 400;
 }
 
 #focusInput {
@@ -149,7 +156,7 @@ button:hover:not(:disabled) {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
-    font-family: 'Hepta Slab', serif;
+    font-family: 'Inter', sans-serif;
 }
 
 .modal-buttons {

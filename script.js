@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pauseButton = document.getElementById('pause');
     const resetButton = document.getElementById('reset');
     const modeButtons = document.querySelectorAll('.mode');
+    const focusModal = document.getElementById('focusModal');
+    const focusInput = document.getElementById('focusInput');
+    const confirmFocusButton = document.getElementById('confirmFocus');
+    const skipFocusButton = document.getElementById('skipFocus');
+    const focusText = document.querySelector('.focus-text');
 
     let timeLeft = 25 * 60; // 25 minutes in seconds
     let timerId = null;
@@ -22,26 +27,44 @@ document.addEventListener('DOMContentLoaded', () => {
         document.title = `${timeString} - ${modeText} Timer`;
     }
 
+    function showFocusModal() {
+        focusModal.style.display = 'flex';
+        focusInput.focus();
+    }
+
+    function hideFocusModal() {
+        focusModal.style.display = 'none';
+    }
+
     function startTimer() {
         if (!isRunning) {
-            isRunning = true;
-            isPaused = false;
-            startButton.disabled = true;
-            startButton.textContent = 'Zeit läuft';
-            timerId = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateDisplay();
-                } else {
-                    clearInterval(timerId);
-                    isRunning = false;
-                    startButton.disabled = false;
-                    startButton.textContent = 'Start';
-                    document.title = 'Pomodoro Timer'; // Reset title when timer ends
-                    alert('Time is up!');
-                }
-            }, 1000);
+            const activeMode = document.querySelector('.mode.active');
+            if (activeMode.textContent === 'Pomodoro') {
+                showFocusModal();
+            } else {
+                actuallyStartTimer();
+            }
         }
+    }
+
+    function actuallyStartTimer() {
+        isRunning = true;
+        isPaused = false;
+        startButton.disabled = true;
+        startButton.textContent = 'Zeit läuft';
+        timerId = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateDisplay();
+            } else {
+                clearInterval(timerId);
+                isRunning = false;
+                startButton.disabled = false;
+                startButton.textContent = 'Start';
+                document.title = 'Pomodoro Timer';
+                alert('Time is up!');
+            }
+        }, 1000);
     }
 
     function pauseTimer() {
@@ -62,7 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
         startButton.disabled = false;
         startButton.textContent = 'Start';
         isPaused = false;
+        focusText.textContent = ''; // Clear focus text on reset
     }
+
+    confirmFocusButton.addEventListener('click', () => {
+        const focus = focusInput.value.trim();
+        if (focus) {
+            focusText.textContent = `Fokus: ${focus}`;
+        } else {
+            focusText.textContent = '';
+        }
+        hideFocusModal();
+        actuallyStartTimer();
+    });
+
+    skipFocusButton.addEventListener('click', () => {
+        focusText.textContent = '';
+        hideFocusModal();
+        actuallyStartTimer();
+    });
 
     startButton.addEventListener('click', startTimer);
     pauseButton.addEventListener('click', pauseTimer);

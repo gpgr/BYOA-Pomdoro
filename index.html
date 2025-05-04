@@ -6,12 +6,13 @@
     <title>Pomodoro Timer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <h1>Pomodoro Timer</h1>
+        <div class="focus-text"></div>
         <div class="timer">
             <div class="time-display">25:00</div>
             <div class="controls">
@@ -26,6 +27,20 @@
             <button class="mode" data-time="15">Long Break</button>
         </div>
     </div>
+
+    <!-- Focus Popup Modal -->
+    <div class="modal" id="focusModal">
+        <div class="modal-content">
+            <h2>Was ist dein Fokus?</h2>
+            <p>Woran möchtest du in diesem Pomodoro arbeiten?</p>
+            <input type="text" id="focusInput" placeholder="Zum Beispiel: E-Mail beantworten, Projekt X vorbereiten...">
+            <div class="modal-buttons">
+                <button id="confirmFocus">Bestätigen</button>
+                <button id="skipFocus">Überspringen</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html> 

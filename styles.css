@@ -24,9 +24,17 @@ body {
 }
 
 h1 {
-    color: purple;
+    color: #333;
     margin-bottom: 1.5rem;
     font-weight: 700;
+}
+
+.focus-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    min-height: 2rem;
+    font-style: italic;
 }
 
 .timer {
@@ -99,4 +107,63 @@ button:disabled {
 
 button:hover:not(:disabled) {
     opacity: 0.9;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.modal p {
+    margin-bottom: 1.5rem;
+    color: #666;
+}
+
+#focusInput {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: 'Hepta Slab', serif;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+#confirmFocus {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#skipFocus {
+    background-color: #e0e0e0;
+    color: #333;
 } 

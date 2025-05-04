@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Unna', serif;
+    font-family: 'Hepta Slab', serif;
 }
 
 body {
@@ -55,6 +55,8 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     font-weight: 400;
+    flex: 1;
+    min-width: 0;
 }
 
 button:disabled {
@@ -86,6 +88,8 @@ button:disabled {
 .mode {
     background-color: #e0e0e0;
     color: #333;
+    flex: 1;
+    min-width: 0;
 }
 
 .mode.active {

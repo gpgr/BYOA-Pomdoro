@@ -9,12 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmFocusButton = document.getElementById('confirmFocus');
     const skipFocusButton = document.getElementById('skipFocus');
     const focusText = document.querySelector('.focus-text');
+    const timerSound = document.getElementById('timerSound');
 
     let timeLeft = 25 * 60; // 25 minutes in seconds
     let timerId = null;
     let isRunning = false;
     let isPaused = false;
     let currentFocus = '';
+
+    function playTimerSound() {
+        timerSound.currentTime = 0; // Reset to beginning
+        timerSound.play().catch(error => {
+            console.log('Audio playback failed:', error);
+        });
+    }
 
     function updateDisplay() {
         const minutes = Math.floor(timeLeft / 60);
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 startButton.disabled = false;
                 startButton.textContent = 'Start';
                 document.title = 'Pomodoro Timer';
+                playTimerSound(); // Play sound when timer ends
                 alert('Time is up!');
             }
         }, 1000);
